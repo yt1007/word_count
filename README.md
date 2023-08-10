@@ -4,7 +4,7 @@
 Basic word, line, character, and byte count in C.
 
 ## Installation
-Run make. It's a simple program, so there aren't much options.
+Clone the repository. Enter the cloned directory. Run `make`. It's a simple program, so there aren't much options.
 
 ## Example screens
 ### Usage on standard input
