@@ -46,7 +46,7 @@ Clone the repository. Enter the cloned directory. Run `make`. It's a simple prog
 	% ./wc Makefile word_count.c
 	      38     109    1204 Makefile
 	     116     441    3627 word_count.c
-	     116     441    3627 total
+	     154     550    4831 total
 	% wc Makefile word_count.c | cat -e
 	      38     109    1204 Makefile$
 	     116     441    3627 word_count.c$
@@ -54,4 +54,4 @@ Clone the repository. Enter the cloned directory. Run `make`. It's a simple prog
 	% ./wc Makefile word_count.c | cat -e
 	      38     109    1204 Makefile$
 	     116     441    3627 word_count.c$
-	     116     441    3627 total$
+	     154     550    4831 total$

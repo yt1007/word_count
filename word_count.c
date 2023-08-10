@@ -6,7 +6,7 @@
 /*   By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:45 by yetay             #+#    #+#             */
-/*   Updated: 2023/08/10 19:20:26 by yetay            ###   ########.fr       */
+/*   Updated: 2023/08/10 19:33:40 by yetay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	main(int argc, char **argv)
 		errno = count_them(fd, argv[i], &dat);
 		if (errno)
 			return (errno);
+		update_total(&dat, &tot);
 	}
-	update_total(&dat, &tot);
-	printf("%8i%8i%8i %s\n", tot.line, tot.word, tot.byte, "total");
+	if (argc > 2)
+		printf("%8i%8i%8i %s\n", tot.line, tot.word, tot.byte, "total");
 	return (0);
 }
 
