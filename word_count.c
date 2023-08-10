@@ -6,7 +6,7 @@
 /*   By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:45 by yetay             #+#    #+#             */
-/*   Updated: 2023/08/10 18:04:52 by yetay            ###   ########.fr       */
+/*   Updated: 2023/08/10 18:29:02 by yetay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,14 @@ int	main(int argc, char **argv)
 	fd = 0;
 	if (argc > 1)
 		fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	if (fd < 0 || read(fd, 0, 0) < 0)
 	{
 		perror("Unable to open file");
-		return (fd);
+		if (fd)
+			return (fd);
+		return (read(fd, 0, 0));
 	}
-	dat.word = 0;
-	dat.line = 0;
-	dat.byte = 0;
-	while (read(fd, &c, 1))
-	{
-		dat.byte++;
-		if (c == '\n')
-			dat.line++;
-		if (is_space(c) && !is_space(tmp))
-			dat.word++;
-		tmp = c;
-	}
+	count_them(fd, &dat);
 	printf("%8i%8i%8i", dat.line, dat.word, dat.byte);
 	if (argc > 1)
 		printf(" %s", argv[1]);
@@ -73,4 +64,21 @@ int	is_space(char c)
 	if (c == ' ')
 		return (1);
 	return (0);
+}
+
+/* the counter */
+void	count_them(int fd, t_wc *dat)
+{
+	dat->word = 0;
+	dat->line = 0;
+	dat->byte = 0;
+	while (read(fd, &c, 1))
+	{
+		dat->byte++;
+		if (c == '\n')
+			dat->line++;
+		if (is_space(c) && !is_space(tmp))
+			dat->word++;
+		tmp = c;
+	}
 }
