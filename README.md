@@ -38,3 +38,20 @@ Run make. It's a simple program, so there aren't much options.
 	      30     102    1192$
 	% cat word_count.h | ./wc | cat -e
 	      30     102    1192$
+### Usage with multiple input files
+	% wc Makefile word_count.c
+	      38     109    1204 Makefile
+	     116     441    3627 word_count.c
+	     154     550    4831 total
+	% ./wc Makefile word_count.c
+	      38     109    1204 Makefile
+	     116     441    3627 word_count.c
+	     116     441    3627 total
+	% wc Makefile word_count.c | cat -e
+	      38     109    1204 Makefile$
+	     116     441    3627 word_count.c$
+	     154     550    4831 total$
+	% ./wc Makefile word_count.c | cat -e
+	      38     109    1204 Makefile$
+	     116     441    3627 word_count.c$
+	     116     441    3627 total$

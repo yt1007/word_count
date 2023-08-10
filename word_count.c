@@ -6,7 +6,7 @@
 /*   By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:45 by yetay             #+#    #+#             */
-/*   Updated: 2023/08/10 18:29:02 by yetay            ###   ########.fr       */
+/*   Updated: 2023/08/10 19:20:26 by yetay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,70 @@
 /* A word is defined as a string of characters delimited by white space       */
 /* characters. White space characters are the set of characters for which     */
 /* the iswspace(3) function returns true.                                     */
-/* Function currently only supports one input file.                           */
+/* If more than one input file is specified, a line of cumulative counts for  */
+/* all the files is displayed on a separate line after the output for the     */
+/* last file.                                                                 */
 int	main(int argc, char **argv)
 {
 	t_wc	dat;
+	t_wc	tot;
 	int		fd;
+	int		i;
+	int		errno;
+
+	reset_dat(&dat);
+	fd = 0;
+	if (argc == 1)
+	{
+		errno = count_them(fd, 0, &dat);
+		return (0);
+	}
+	i = 0;
+	while (++i < argc)
+	{
+		fd = open(argv[i], O_RDONLY);
+		errno = count_them(fd, argv[i], &dat);
+		if (errno)
+			return (errno);
+	}
+	update_total(&dat, &tot);
+	printf("%8i%8i%8i %s\n", tot.line, tot.word, tot.byte, "total");
+	return (0);
+}
+
+/* the data resetter/initter                                                  */
+void	reset_dat(t_wc *dat)
+{
+	dat->line = 0;
+	dat->word = 0;
+	dat->byte = 0;
+}
+
+/* the counter                                                                */
+int	count_them(int fd, char *fn, t_wc *dat)
+{
 	char	c;
 	char	tmp;
 
-	fd = 0;
-	if (argc > 1)
-		fd = open(argv[1], O_RDONLY);
 	if (fd < 0 || read(fd, 0, 0) < 0)
 	{
 		perror("Unable to open file");
-		if (fd)
-			return (fd);
 		return (read(fd, 0, 0));
 	}
-	count_them(fd, &dat);
-	printf("%8i%8i%8i", dat.line, dat.word, dat.byte);
-	if (argc > 1)
-		printf(" %s", argv[1]);
-	printf("\n");
+	reset_dat(dat);
+	while (read(fd, &c, 1))
+	{
+		dat->byte++;
+		if (c == '\n')
+			dat->line++;
+		if (is_space(c) && !is_space(tmp))
+			dat->word++;
+		tmp = c;
+	}
+	if (fn)
+		printf("%8i%8i%8i %s\n", dat->line, dat->word, dat->byte, fn);
+	else
+		printf("%8i%8i%8i\n", dat->line, dat->word, dat->byte);
 	return (0);
 }
 
@@ -66,19 +107,10 @@ int	is_space(char c)
 	return (0);
 }
 
-/* the counter */
-void	count_them(int fd, t_wc *dat)
+/* the cumulative counter updater                                             */
+void	update_total(t_wc *dat, t_wc *tot)
 {
-	dat->word = 0;
-	dat->line = 0;
-	dat->byte = 0;
-	while (read(fd, &c, 1))
-	{
-		dat->byte++;
-		if (c == '\n')
-			dat->line++;
-		if (is_space(c) && !is_space(tmp))
-			dat->word++;
-		tmp = c;
-	}
+	tot->word += dat->word;
+	tot->line += dat->line;
+	tot->byte += dat->byte;
 }

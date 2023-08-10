@@ -6,7 +6,7 @@
 /*   By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:50:21 by yetay             #+#    #+#             */
-/*   Updated: 2023/08/10 18:29:38 by yetay            ###   ########.fr       */
+/*   Updated: 2023/08/10 19:19:31 by yetay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef struct s_wc {
 }	t_wc;
 
 /* word_count.c */
+void	reset_dat(t_wc *dat);
+int		count_them(int fd, char *fn, t_wc *dat);
 int		is_space(char c);
-void	count_them(int fd, t_wc *dat);
+void	update_total(t_wc *dat, t_wc *tot);
 
 #endif
