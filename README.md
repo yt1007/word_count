@@ -57,4 +57,4 @@ Clone the repository. Enter the cloned directory. Run `make`. It's a simple prog
 	     154     550    4831 total$
 
 ## The implementation
-![The word_count flowchart](https://github.com/yt1007/word_count/assets/132648269/5830f260-9e87-4472-96c1-4888d3ec3ff5)
+![The word_count flowchart](https://github.com/yt1007/word_count/word_count.png)
