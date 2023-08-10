@@ -6,7 +6,7 @@
 /*   By: yetay <yetay@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:28:45 by yetay             #+#    #+#             */
-/*   Updated: 2023/08/10 18:02:10 by yetay            ###   ########.fr       */
+/*   Updated: 2023/08/10 18:04:52 by yetay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	main(int argc, char **argv)
 			dat.word++;
 		tmp = c;
 	}
-	printf("%8i%8i%8i\n", dat.line, dat.word, dat.byte);
+	printf("%8i%8i%8i", dat.line, dat.word, dat.byte);
+	if (argc > 1)
+		printf(" %s", argv[1]);
+	printf("\n");
 	return (0);
 }
 
